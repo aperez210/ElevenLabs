@@ -3,7 +3,7 @@ Command line interface for Eleven Lab's text-to-speech api
 
 You need an elevenlabs api key to properly utilize this application.
 
-##Steps2Use:
+## Steps to use:
 
 Step 1. Get an API key.
 
