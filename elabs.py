@@ -28,16 +28,16 @@ def add(name:str,path:str):
         'description': "This is a description"
     }
     response = requests.post(url, headers=headers, data=data, files=files)
+    print(response.text)
     vid = ""
     try:
         vid = json.loads(response.text).get("voice_id")
     except:
-        print("fail")
+        return
     edit.saveVoice(name,vid)
-    print(response.text)
 
-def get(vid:str):
-    url = f"https://api.elevenlabs.io/v1/voices/{vid}?with_settings=true"
+def get():
+    url = "https://api.elevenlabs.io/v1/voices"
     headers = {
         "Accept": "application/json",
         "xi-api-key": key
@@ -47,7 +47,7 @@ def get(vid:str):
 
     #if(json.loads(response.text)['detail']['status'] == 'voice_not_found'):
     #    return False
-    return response.text
+    print(response.text)
     
 def editVoice(name:str,fileList):
     url = f"https://api.elevenlabs.io/v1/voices/{str}/edit"
@@ -84,14 +84,14 @@ def tts(vid:str,words:str,fileOut:str):
     "text": words,
     "model_id": "eleven_monolingual_v1",
     "voice_settings": {
-        "stability": .6,
-        "similarity_boost": .9
+        "stability": .4,
+        "similarity_boost": .5
     }
     }
     response = requests.post(url, json=data, headers=headers)
     fName = f'output\\{fileOut}.mp3'
-    if util.has(fName):
-        fName = util.numerateFiles(fName)
+    #while util.has(fName):
+       # fName = fName + "I"
     with open(fName, 'wb') as f:
         for chunk in response.iter_content(chunk_size=CHUNK_SIZE):
             if chunk:
@@ -109,8 +109,8 @@ def user(*args):
     response = requests.get(url, headers=headers)
     if(len(args)== 0):
         x = json.loads(response.text)['subscription']
-        for key,value in x.items():
-            print(key+":", value)
+        for k,value in x.items():
+            print(k+":", value)
     elif(len(args) == 1):
         x = json.loads(response.text)['subscription'][args[0]]
         print(args[0]+":",x)

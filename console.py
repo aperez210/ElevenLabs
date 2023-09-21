@@ -27,7 +27,7 @@ def keyword(tokens):
         case "add":
             return threading.Thread(target=elabs.add,args=(tokens[1], tokens[2]))
         case "tts" | "say":
-            return threading.Thread(target=elabs.add,args=(edit.getVoice(tokens[1]),joinStringList(tokens[3:len(tokens)]),tokens[2]))
+            return threading.Thread(target=elabs.tts,args=(edit.getVoice(tokens[1]),joinStringList(tokens[3:len(tokens)]),tokens[2]))
         case "list":
             return threading.Thread(target=edit.listVoices())
         case "history":
@@ -35,6 +35,11 @@ def keyword(tokens):
         case "play":
             if tokens[1] == "last" : return threading.Thread(target=play,args=(edit.getLast(),))
             else : return threading.Thread(target=play,args=(tokens[1],))
+        case "get":
+            return threading.Thread(target=elabs.get())
+        case "user":
+            return threading.Thread(target=elabs.user())
+ 
 
 def joinStringList(list):
     output = ""
