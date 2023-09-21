@@ -21,7 +21,7 @@ def keyword(tokens):
         case "stop" | "x":
             return "Stopping..."
         case "help" | "?":
-            return  threading.Thread(target=help)
+            return threading.Thread(target=help)
         case "delete":
             return threading.Thread(target=elabs.delete,args=(tokens[1],))
         case "add":
